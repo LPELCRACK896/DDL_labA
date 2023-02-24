@@ -14,6 +14,12 @@ errors_msgs = {
     "NOTFOUND_OPERATION": "Expected operator between expression, couldnt be found"
 
 }
+
+def __is_alphanumeric(char):
+    ascii_value = ord(char)
+    return (65 <= ascii_value <= 90) or (97 <= ascii_value <= 122) or (48 <= ascii_value <= 57)
+
+
 def infix_to_posfix(regex: str) -> set:
     """Turns a regex in infix format into a posfix if formatted correctly. 
 
@@ -38,7 +44,9 @@ def infix_to_posfix(regex: str) -> set:
         name = "SYMBOL_FORBIDDEN"
         characters = ", ".join(forbidden_simbols)
         return posfix, Error(name=name, details=errors_msgs.get(name), character=characters, data=f"Fobidden characters are: {characters}"), alphabet
-
+    if(any(map(lambda char: not (__is_alphanumeric(char) or char in other_symbols or char in operations_priority), list(regex)))):
+        name = "SYMBOL_FORBIDDEN"
+        return posfix, Error(name=name, details=errors_msgs.get(name), character="", data=f"Must include only numbers or letters, (, ), *, |, +, ?, . in your regex"), alphabet
     def __rebuild_expression (stack: Stack):
         items = stack.items[:]
         if items[-1] in operations_priority:#Ultimo item es un operador
