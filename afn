@@ -1,0 +1,7 @@
+digraph {
+	graph [rankdir=LR]
+	start [style=invis]
+	A [color=red shape=diamond]
+	B [shape=doublecircle]
+	A -> B [label=c]
+}
