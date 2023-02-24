@@ -1,7 +1,17 @@
 digraph {
 	graph [rankdir=LR]
 	start [style=invis]
-	A [color=red shape=diamond]
-	B [shape=doublecircle]
+	C [color=red shape=diamond]
+	D
+	E
+	F [shape=doublecircle]
+	A
+	B
+	C -> D [label=c]
+	D -> E [label="ε"]
 	A -> B [label=c]
+	B -> F [label="ε"]
+	B -> A [label="ε"]
+	E -> A [label="ε"]
+	E -> F [label="ε"]
 }

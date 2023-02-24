@@ -22,10 +22,10 @@ def __replicate_afn(states_replica: dict, afn_original: AFN) -> AFN:
     transitions = {}
     for tran in afn_original.transitions:
         new_state = states_replica.get(tran)
-        transitions = afn_original.transitions.get(tran)
+        transt = afn_original.transitions.get(tran)
         each_transitions = {}
-        for symbols in transitions:
-            actual = transitions.get(symbols)
+        for symbols in transt:
+            actual = transt.get(symbols)
             if not actual:
                 each_transitions[symbols] = []
             else:
@@ -82,8 +82,9 @@ def generate_afn_from_posfix(posfix: str, alphabet: set)-> AFN:
                         total_states, states = __get_available_name_states(total_states, 1)
                         states_replica[state] = states[0]
                     afn_replica = __replicate_afn(states_replica, afn)
-                    
-                    new_afn = __build_plus(afn1, afn_replica, alphabet)
+
+                    total_states, states = __get_available_name_states(total_states, 2)
+                    new_afn = __build_plus(afn1, afn_replica, states, alphabet)
                     expr_afn[(new_expr, j-1)] = new_afn
                     posfix_list[j] = new_expr
                     del expr_afn[(posfix_list[j-1], j-1)]
@@ -181,8 +182,8 @@ def __build_star(afn1:AFN, states, alphabet)-> AFN:
     
     return AFN(new_start, alphabet, states, [new_end], transitions, new_end)
 
-def __build_plus(afn1:AFN, afn1_clone: AFN, alphabet)-> AFN:
-    return __build_concat(afn1_clone, afn1,  alphabet)
+def __build_plus(afn1:AFN, afn1_clone: AFN, states,  alphabet)-> AFN:
+    return __build_concat(afn1_clone, __build_star(afn1, states, alphabet),  alphabet)
 
 def __build_interrogation(afn1:AFN, states, alphabet)-> AFN:
     new_start = states[0]
