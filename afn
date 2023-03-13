@@ -2,27 +2,6 @@ digraph {
 	graph [rankdir=LR]
 	start [style=invis]
 	A [color=red shape=diamond]
-	B
-	C
-	D
-	E
-	F
-	K
-	L [shape=doublecircle]
-	G
-	H
-	I
-	J
-	A -> B [label=a]
-	B -> C [label="ε"]
-	C -> D [label=a]
-	D -> E [label="ε"]
-	E -> F [label=b]
-	F -> K [label="ε"]
-	G -> H [label=c]
-	H -> L [label="ε"]
-	I -> J [label=d]
-	J -> L [label="ε"]
-	K -> G [label="ε"]
-	K -> I [label="ε"]
+	B [shape=doublecircle]
+	A -> B [label=s]
 }

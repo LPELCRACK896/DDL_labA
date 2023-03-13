@@ -136,7 +136,8 @@ def infix_to_posfix(regex: str) -> set:
                             error = internal_error
                         else:
                             stack.push(expression)
-                            last_was_expression = True                        
+                            last_was_expression = True 
+                            pharentesis_lvl -= 1                       
         else: #Caracteres
             if last_was_expression: # Concatenacion implicita
                 stack.push(".")
@@ -147,6 +148,10 @@ def infix_to_posfix(regex: str) -> set:
         i += 1
     if error:
         return posfix, error, set()
+    if pharentesis_lvl!=0:
+        name = "PHARENTESIS_UNMATCH"
+        return regex, Error(name, errors_msgs.get(name), "()", "()"), set()
+    
     posfix, error = __rebuild_expression(stack=stack)
     if error:
         return regex, error, set()  
